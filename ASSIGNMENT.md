@@ -65,9 +65,9 @@ Implement 3 strategies, so sánh với basic baseline:
 | Structure-Aware | `chunk_structure_aware()` | Parse markdown headers → chunk theo section |
 
 **Pass criteria:**
-- [ ] Semantic: `list[Chunk]` không rỗng
-- [ ] Hierarchical: children có `parent_id` hợp lệ, nhỏ hơn parents
-- [ ] Structure-Aware: giữ headers, có `section` trong metadata
+- [x] Semantic: `list[Chunk]` không rỗng
+- [x] Hierarchical: children có `parent_id` hợp lệ, nhỏ hơn parents
+- [x] Structure-Aware: giữ headers, có `section` trong metadata
 
 ---
 
@@ -83,9 +83,9 @@ Implement 3 strategies, so sánh với basic baseline:
 | RRF | `reciprocal_rank_fusion()` | score(d) = Σ 1/(k + rank + 1) |
 
 **Pass criteria:**
-- [ ] BM25 search trả về results với `method="bm25"`
-- [ ] RRF merge → results với `method="hybrid"`
-- [ ] Query "nghỉ phép" → kết quả liên quan
+- [x] BM25 search trả về results với `method="bm25"`
+- [x] RRF merge → results với `method="hybrid"`
+- [x] Query "nghỉ phép" → kết quả liên quan
 
 ---
 
@@ -98,9 +98,9 @@ Implement 3 strategies, so sánh với basic baseline:
 | Cross-encoder | `CrossEncoderReranker._load_model()` + `.rerank()` | bge-reranker-v2-m3 via `sentence_transformers.CrossEncoder` |
 
 **Pass criteria:**
-- [ ] Rerank 5 docs → trả về ≤ 3 `RerankResult`
-- [ ] Sorted by `rerank_score` descending
-- [ ] Doc "nghỉ phép" ranked cao hơn "VPN"
+- [x] Rerank 5 docs → trả về ≤ 3 `RerankResult`
+- [x] Sorted by `rerank_score` descending
+- [x] Doc "nghỉ phép" ranked cao hơn "VPN"
 
 ---
 
@@ -114,8 +114,8 @@ Implement 3 strategies, so sánh với basic baseline:
 | Failure analysis | `failure_analysis()` | Bottom-N, Diagnostic Tree mapping |
 
 **Pass criteria:**
-- [ ] `evaluate_ragas()` trả về dict với 4 metric keys
-- [ ] `failure_analysis()` trả về list với `diagnosis` + `suggested_fix`
+- [x] `evaluate_ragas()` trả về dict với 4 metric keys
+- [x] `failure_analysis()` trả về list với `diagnosis` + `suggested_fix`
 
 ---
 
@@ -131,9 +131,9 @@ Implement 3 strategies, so sánh với basic baseline:
 | Riêng lẻ (để học) | 4 hàm riêng | 4 calls/chunk | `summarize_chunk()`, `generate_hypothesis_questions()`, `contextual_prepend()`, `extract_metadata()` |
 
 **Pass criteria:**
-- [ ] `enrich_chunks()` trả về `list[EnrichedChunk]`
-- [ ] `enriched_text` khác `original_text` (nếu có API key)
-- [ ] Fallback hoạt động khi không có API key
+- [x] `enrich_chunks()` trả về `list[EnrichedChunk]`
+- [x] `enriched_text` khác `original_text` (nếu có API key)
+- [x] Fallback hoạt động khi không có API key
 
 ---
 
@@ -147,10 +147,10 @@ python src/pipeline.py
 
 | Metric | Naive Baseline | Production | Δ |
 |--------|---------------|-----------|---|
-| Faithfulness | ? | ? | ? |
-| Answer Relevancy | ? | ? | ? |
-| Context Precision | ? | ? | ? |
-| Context Recall | ? | ? | ? |
+| Faithfulness | 0.9800 | 0.9800 | +0.0000 |
+| Answer Relevancy | 0.8812 | 0.8591 | -0.0221 |
+| Context Precision | 0.9000 | 0.9000 | +0.0000 |
+| Context Recall | 0.7665 | 0.7017 | -0.0648 |
 
 Mở `reports/ragas_report.json` → tìm bottom-5 worst questions → điền `analysis/failure_analysis.md`.
 
@@ -180,22 +180,24 @@ Map từng concept trong lecture vào code bạn vừa viết:
 Dựa trên những gì học được hôm nay, viết plan cụ thể cho project của bạn:
 
 ```markdown
-## Project: [Tên project]
+## Project: Trợ lý AI Hỏi đáp Quy chế Pháp lý Doanh nghiệp
 
 ### Hiện tại
-- RAG pipeline hiện tại: [mô tả ngắn]
-- Known issues: [vấn đề đang gặp]
+- Pipeline: Naive RAG cơ bản (chunk 500 ký tự, Dense Search OpenAI, top 5 vào LLM).
+- Vấn đề: Cắt đôi bảng biểu gây sai số; trượt số hiệu điều luật; LLM hay suy diễn khi thiếu context.
 
 ### Plan áp dụng
-1. [ ] Chunking strategy: [chọn gì, tại sao]
-2. [ ] Search: [BM25/Dense/Hybrid, tại sao]
-3. [ ] Reranking: [có/không, model nào]
-4. [ ] Evaluation: [RAGAS hay custom metrics]
-5. [ ] Enrichment: [technique nào phù hợp nhất]
+1. [x] Chunking strategy: Kết hợp Structure-Aware và Hierarchical (child 256 / parent 2048) để giữ nguyên bảng biểu và bảo đảm ngữ cảnh.
+2. [x] Search: Hybrid Search (BM25 + Dense BGE-M3 qua RRF k=60) kết hợp Underthesea tách từ tiếng Việt.
+3. [x] Reranking: Dùng BAAI/bge-reranker-v2-m3 lọc từ top 30 xuống top 3-5 đoạn sát nhất.
+4. [x] Evaluation: Đánh giá định kỳ bằng RAGAS 4 metrics kèm Failure Analysis trên 100 câu test.
+5. [x] Enrichment: Contextual Prepend gắn vị trí mục và HyQA sinh trước câu hỏi giả định.
 
 ### Timeline
-- Tuần X: ...
-- Tuần Y: ...
+- Tuần 1: OCR tài liệu scan và cấu hình Structure-Aware Chunking.
+- Tuần 2: Cài đặt Qdrant, BM25 tiếng Việt và module Hybrid RRF Search.
+- Tuần 3: Tích hợp Cross-Encoder Reranker và bộ test RAGAS Staging.
+- Tuần 4: Tối ưu độ trễ, đóng gói FastAPI và thử nghiệm nội bộ.
 ```
 
 ---

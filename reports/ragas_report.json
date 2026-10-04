@@ -1,0 +1,91 @@
+{
+  "aggregate": {
+    "faithfulness": 0.98,
+    "answer_relevancy": 0.8591,
+    "context_precision": 0.9,
+    "context_recall": 0.7017
+  },
+  "num_questions": 20,
+  "failures": [
+    {
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "avg_score": 0.7825,
+      "worst_metric": "context_recall",
+      "score": 0.4542,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Nghỉ phép không lương 20 ngày cần ai phê duyệt?",
+      "avg_score": 0.81055,
+      "worst_metric": "context_recall",
+      "score": 0.5722,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Lương thử việc của nhân viên Junior mức cao nhất là bao nhiêu?",
+      "avg_score": 0.8123,
+      "worst_metric": "context_recall",
+      "score": 0.5577,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Nhân viên tạm ứng 15 triệu, sau 20 ngày mới thanh toán. Bị phạt bao nhiêu?",
+      "avg_score": 0.8156749999999999,
+      "worst_metric": "context_recall",
+      "score": 0.5577,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "avg_score": 0.81715,
+      "worst_metric": "context_recall",
+      "score": 0.5636,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Thông tin lương thuộc cấp độ phân loại dữ liệu nào?",
+      "avg_score": 0.81715,
+      "worst_metric": "context_recall",
+      "score": 0.5795,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Nếu cần mua một chiếc laptop 30 triệu cho nhân viên mới, ai phê duyệt và cần gì từ phòng CNTT?",
+      "avg_score": 0.81795,
+      "worst_metric": "context_recall",
+      "score": 0.6543,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "avg_score": 0.8348249999999999,
+      "worst_metric": "context_recall",
+      "score": 0.576,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Bao lâu phải đổi mật khẩu một lần?",
+      "avg_score": 0.8429249999999999,
+      "worst_metric": "context_recall",
+      "score": 0.6667,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    },
+    {
+      "question": "Có cần kích hoạt xác thực đa yếu tố (MFA) không?",
+      "avg_score": 0.867225,
+      "worst_metric": "context_recall",
+      "score": 0.6844,
+      "diagnosis": "Missing relevant chunks",
+      "suggested_fix": "Improve chunking or add BM25"
+    }
+  ]
+}

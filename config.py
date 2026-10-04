@@ -5,8 +5,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# --- API Keys ---
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+# --- API Keys & LLM ---
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "") or GEMINI_API_KEY
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "")
+if GEMINI_API_KEY and not os.getenv("OPENAI_BASE_URL"):
+    OPENAI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
+if OPENAI_API_KEY and not os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+if OPENAI_BASE_URL and not os.getenv("OPENAI_BASE_URL"):
+    os.environ["OPENAI_BASE_URL"] = OPENAI_BASE_URL
+
+LLM_MODEL = os.getenv("LLM_MODEL", "gemini-3.5-flash" if (GEMINI_API_KEY or "generativelanguage" in OPENAI_BASE_URL) else "gpt-4o-mini")
 
 # --- Qdrant ---
 QDRANT_HOST = "localhost"

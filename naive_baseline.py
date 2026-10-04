@@ -38,7 +38,7 @@ def main():
     test_set = load_test_set()
     questions, answers, all_contexts, ground_truths = [], [], [], []
 
-    from config import OPENAI_API_KEY
+    from config import OPENAI_API_KEY, LLM_MODEL
     llm_client = None
     if OPENAI_API_KEY:
         from openai import OpenAI
@@ -51,7 +51,7 @@ def main():
         if llm_client and contexts:
             try:
                 context_str = "\n\n".join(contexts)
-                resp = llm_client.chat.completions.create(model="gpt-4o-mini", messages=[
+                resp = llm_client.chat.completions.create(model=LLM_MODEL, messages=[
                     {"role": "system", "content": "Trả lời CHỈ dựa trên context. Nếu không có → nói 'Không tìm thấy.'"},
                     {"role": "user", "content": f"Context:\n{context_str}\n\nCâu hỏi: {item['question']}"},
                 ])
